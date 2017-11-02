@@ -4,6 +4,8 @@ import app.model.enums.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -19,9 +21,17 @@ public class View extends BorderPane {
     private TopMenu topMenu;
 
     private int gridSize;
+    private int mapWidth;
+    private int mapHeight;
 
-    public View(int gridSize) {
+    private StackPane[][] layerPane;
+
+    public View(int gridSize, int mapWidth, int mapHeight) {
         this.gridSize = gridSize;
+        this.mapWidth = mapWidth;
+        this.mapHeight = mapHeight;
+
+        layerPane = new StackPane[mapWidth][mapHeight];
 
         gridPane = new GridPane();
         topBox = new HBox();
@@ -30,7 +40,7 @@ public class View extends BorderPane {
         rightBox = new VBox();
 
         topMenu = new TopMenu();
-        // topMenu.setMinWidth(Double.MAX_VALUE);
+        // topMenu.setMinWidth(Double.MAX_VALUE); // make the unfolded menu disappear unless you hold the mouse down
 
         this.setTop(topBox);
         this.setBottom(bottomBox);
@@ -54,30 +64,29 @@ public class View extends BorderPane {
         gridPane.setVgap(0);
         gridPane.setAlignment(Pos.CENTER);
 
-        int max = 4;
-        for (int row = 0; row < max; row++) {
-            for (int column = 0; column < max; column++) {
-
-                StackPane layerPane = new StackPane();
-
-                layerPane.getChildren().add(setFloorLayer(FloorImage.STONE));
-                layerPane.getChildren().add(setTokenLayer(TokenImage.NONE));
-                layerPane.getChildren().add(setUnitLayer(UnitImage.HERO_MELEE));
-                layerPane.getChildren().add(setSelectionLayer(SelectionImage.NONE));
-                layerPane.getChildren().add(setLineOfSightLayer(LineOfSightImage.NONE));
-
-                gridPane.add(layerPane, column, row);
-                gridPane.add(setLabelLayer("Text"), column, row);
+        for (int row = 0; row < mapWidth; row++) {
+            for (int column = 0; column < mapHeight; column++) {
+                layerPane[row][column] = new StackPane();
+                layerPane[row][column].getChildren().add(setTerrainLayer(TerrainImage.STONE));
+                layerPane[row][column].getChildren().add(setTokenLayer(TokenImage.NONE));
+                layerPane[row][column].getChildren().add(setUnitLayer(UnitImage.HERO_MELEE));
+                layerPane[row][column].getChildren().add(setSelectionLayer(SelectionImage.NONE));
+                layerPane[row][column].getChildren().add(setLineOfSightLayer(LineOfSightImage.NONE));
+                gridPane.add(layerPane[row][column], column, row);
             }
         }
+    }
+
+    public StackPane[][] getLayerPane() {
+        return layerPane;
     }
 
     public TopMenu getTopMenu() {
         return topMenu;
     }
 
-    public ImageView setFloorLayer(FloorImage floorImage){
-        ImageView imageView = new ImageView(floorImage.getUrl());
+    public ImageView setTerrainLayer(TerrainImage terrainImage){
+        ImageView imageView = new ImageView(terrainImage.getUrl());
         imageView.setFitHeight(gridSize);
         imageView.setFitWidth(gridSize);
         return imageView;

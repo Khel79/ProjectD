@@ -13,12 +13,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         int gridSize = 32;
-        View view = new View(gridSize);
+        int mapWidth = 5;
+        int mapHeight = 5;
+        View view = new View(gridSize, mapWidth, mapHeight);
         Model model = new Model();
         Presenter presenter = new Presenter(view, model, primaryStage);
 
         primaryStage.setTitle("Test");
-        primaryStage.setScene(new Scene(view, 300, 275));
+        primaryStage.setScene(new Scene(view, 300, 300));
         primaryStage.show();
     }
 

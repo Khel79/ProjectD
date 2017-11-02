@@ -1,8 +1,12 @@
 package app.model;
 
+import app.model.enums.TerrainImage;
+
 public class Tile {
 
     private boolean isBlocked_top, isBlocked_right, isBlocked_bottom, isBlocked_left;
+    private boolean hasPlayer, hasMonster;
+    private TerrainImage terrainImage;
 
 
     public Tile(){
