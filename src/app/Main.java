@@ -19,7 +19,7 @@ public class Main extends Application {
         Model model = new Model();
         Presenter presenter = new Presenter(view, model, primaryStage);
 
-        primaryStage.setTitle("Test");
+        primaryStage.setTitle("ScrollingMapExample");
         primaryStage.setScene(new Scene(view, 300, 300));
         primaryStage.show();
     }
