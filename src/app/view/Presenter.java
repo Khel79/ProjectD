@@ -24,6 +24,12 @@ public class Presenter {
         initialiseTopMenuEventHandling();
     }
 
+    public void init() {
+        // bind the preferred size of the scroll area to the size of the scene.
+        view.getScrollPane().prefWidthProperty().bind(primaryStage.getScene().widthProperty());
+        view.getScrollPane().prefHeightProperty().bind(primaryStage.getScene().widthProperty());
+    }
+
     private void initialiseTopMenuEventHandling() {
         view.getTopMenu().getGameMenuItemNewGame().setOnAction(e -> newGameAction());
         view.getTopMenu().getGameMenuItemLoadGame().setOnAction(e -> loadGameAction());
@@ -65,12 +71,12 @@ public class Presenter {
 
     private void leftClickOnTileAction(Event e) {
         System.out.println("GRID: You left-clicked. Source: " + e.getSource().toString() + " and Target: " + e.getTarget().toString());
-        ((StackPane) e.getSource()).getChildren().remove(0);
+        ((StackPane) e.getSource()).getChildren().get(0).setVisible(false);
     }
 
     private void rightClickOnTileAction(Event e) {
         System.out.println("GRID: You right-clicked. Source: " + e.getSource().toString() + " and Target: " + e.getTarget().toString());
-        ((StackPane) e.getSource()).getChildren().add(0, view.getCenterMap().setTerrainLayer(TerrainImage.STONE));
+        ((StackPane) e.getSource()).getChildren().get(0).setVisible(true); // add(0, view.getCenterMap().setTerrainLayer(TerrainImage.STONE));
     }
 
 

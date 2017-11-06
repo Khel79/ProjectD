@@ -21,6 +21,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("ScrollingMapExample");
         primaryStage.setScene(new Scene(view, 300, 300));
+        presenter.init();
         primaryStage.show();
     }
 

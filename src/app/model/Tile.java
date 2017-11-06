@@ -5,15 +5,19 @@ import app.model.enums.TerrainImage;
 public class Tile {
 
     private boolean isBlocked_top, isBlocked_right, isBlocked_bottom, isBlocked_left;
-    private boolean hasPlayer, hasMonster;
+    private boolean isPlayerPresent, isMonsterPresent;
+    private boolean isTokenPresent;
+    private int x, y; // x and y coordinates on the grid
     private TerrainImage terrainImage;
 
 
-    public Tile(){
+    public Tile(int x, int y){
         isBlocked_top = false;
         isBlocked_bottom = false;
         isBlocked_left = false;
         isBlocked_right = false;
+
+
     }
 
     public void setBlocked_top(boolean isBlocked) {
